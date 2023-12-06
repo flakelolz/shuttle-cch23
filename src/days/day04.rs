@@ -1,13 +1,13 @@
 use axum::{extract, Json};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ReindeerStrength {
     name: String,
     strength: i32,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Reindeer {
     name: String,
     strength: i32,
@@ -108,6 +108,7 @@ mod tests {
         }
         v
     }
+
 
     #[tokio::test]
     async fn test_calc_strength() {
