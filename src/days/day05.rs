@@ -27,6 +27,7 @@ pub async fn pagination(
         Some(split) => Json(Value::Splitted(
             payload[offset..]
                 .chunks(split)
+                .take(limit)
                 .map(|chunk| chunk.to_vec())
                 .collect::<Vec<Vec<String>>>(),
         )),
