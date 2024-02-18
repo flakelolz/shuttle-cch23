@@ -15,6 +15,7 @@ async fn main() -> shuttle_axum::ShuttleAxum {
         .route("/4/strength", post(day04::calc_strength))
         .route("/4/contest", post(day04::contest))
         .route("/5", post(day05::pagination))
+        .route("/5/old", post(day05::old_pagination))
         .route("/6", post(day06::elfs_on_shelf))
 
     Ok(router.into())

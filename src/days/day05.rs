@@ -15,7 +15,33 @@ pub enum Value {
     Splitted(Vec<Vec<String>>),
 }
 
+// Functional aproach
 pub async fn pagination(
+    Query(pagination): Query<Pagination>,
+    Json(payload): Json<Vec<String>>,
+) -> Json<Value> {
+    let offset = pagination.offset.unwrap_or(0);
+    let limit = pagination.limit.unwrap_or(usize::MAX);
+
+    match pagination.split {
+        Some(split) => Json(Value::Splitted(
+            payload[offset..]
+                .chunks(split)
+                .map(|chunk| chunk.to_vec())
+                .collect::<Vec<Vec<String>>>(),
+        )),
+        None => Json(Value::Default(
+            payload
+                .iter()
+                .skip(offset)
+                .take(limit)
+                .cloned()
+                .collect::<Vec<String>>(),
+        )),
+    }
+}
+
+pub async fn old_pagination(
     Query(pagination): Query<Pagination>,
     Json(payload): Json<Vec<String>>,
 ) -> Json<Value> {
